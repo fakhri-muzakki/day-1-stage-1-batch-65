@@ -6,70 +6,112 @@
 }
 
 body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-  color: #e5e5e5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #0a0a0a;
 }
 
-body > * {
-  max-width: 500px;
+.container {
+  display: flex;
+  padding: 10px;
+  background: oklch(21.6% 0.006 56.043);
+  margin-top: 20px;
+  border-radius: 10px;
+  max-width: 1024px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-inline: auto;
+  padding: 26px;
+}
+
+.container > * {
+  max-width: 520px;
   width: 100%;
 }
 
 h1 {
-  text-align: center;
   margin-bottom: 20px;
-  font-size: 2rem;
-  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f5f5f5;
 }
 
-img,
-p,
-ul {
-  background-color: #111;
-  border-radius: 12px;
-}
-
-img {
-  display: block;
-  margin: 0 auto 16px;
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #3b82f6;
-}
-
-p {
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  text-align: center;
-  color: #cbd5f5;
-}
-
-ul {
-  list-style: none;
-  padding: 16px;
-}
-
-li {
-  padding: 10px 0;
-  border-bottom: 1px solid #222;
+.card1 p {
   font-size: 0.95rem;
+  line-height: 1.6;
+  color: #bdbdbd;
+  margin-bottom: 16px;
 }
 
-li:last-child {
-  border-bottom: none;
+.card1 {
+  margin-bottom: 24px;
 }
 
-li a {
-  color: #60a5fa;
+.btn-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-container a {
+  font-size: 0.9rem;
+  padding: 10px 16px;
+  background: #eaeaea;
+  color: #0a0a0a;
+  border-radius: 20px;
   text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s ease;
 }
 
-li a:hover {
-  text-decoration: underline;
+.btn-container a:hover {
+  background: #d1d1d1;
+}
+
+.btn-download {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.social-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 0.75rem;
+}
+
+.social-container a {
+  border-radius: 100%;
+  padding: 0.45rem;
+  background-color: #1f1f1f;
+  color: #e5e5e5;
+  transition: background 0.2s ease;
+}
+
+.social-container a:hover {
+  background-color: #2a2a2a;
+}
+
+.card2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card2 img {
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+.card2 h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f0f0f0;
+}
+
+.card2 p {
+  font-size: 0.8rem;
+  color: #a1a1a1;
 }

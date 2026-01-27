@@ -3,41 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 2 - Batch 65</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css" />
-    <title>Day 1 - Batch 65</title>
   </head>
   <body>
-    <div class="card">
-      <h1>Biodata</h1>
+    <div class="container">
+      <!-- Card 1 -->
+      <div class="card1">
+        <h1>Hi, I'm Fakhri Muzakki</h1>
+        <p class="">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum nemo
+          dignissimos ad aut molestiae placeat, totam mollitia perferendis
+          delectus magni enim maxime sit beatae consequuntur nesciunt corrupti
+          soluta officiis ipsum. Autem architecto veniam ab quaerat deleniti vel
+          et in deserunt soluta! Hic eligendi sit accusantium, ab quidem alias
+          quibusdam? Aperiam rerum vero nam. Cum ab ullam nemo nihil ea.
+          Incidunt.
+        </p>
 
-      <img src="/assets/profile.webp" alt="Profile" />
+        <div class="btn-container">
+          <a href="https://wa.me/6282146417900" class="">Contact</a>
+          <a href="/" download="/public/resume-en.pdf" class="btn-download"
+            >Download CV <i data-lucide="download"></i>
+          </a>
+        </div>
+      </div>
 
-      <p>Berikut beberapa biodata diri saya :</p>
+      <!-- Socials media -->
+      <div class="social-container">
+        <a href=""> <i data-lucide="linkedin"></i> </a>
+        <a href=""> <i data-lucide="instagram"></i> </a>
+        <a href=""> <i data-lucide="facebook"></i> </a>
+        <a href=""> <i data-lucide="twitter"></i> </a>
+      </div>
 
-      <ul>
-        <li>Nama : Fakhri Muzakki</li>
-        <li>Umur : 18 tahun</li>
-        <li>TTL : Indramayu, 28 April 2007</li>
-        <li>Pendidikan terakhir : SMKN 1 Gantar (RPL)</li>
-        <li>
-          Github :
-          <a href="https://github.com/fakhri-muzakki" target="_blank">
-            fakhri-muzakki
-          </a>
-        </li>
-        <li>
-          LinkedIn :
-          <a href="https://www.linkedin.com/in/fakhrimuzakki/" target="_blank">
-            fakhrimuzakki
-          </a>
-        </li>
-        <li>
-          Personal website :
-          <a href="https://fakhri-muzakki.vercel.app/" target="_blank">
-            fakhri-muzakki.vercel.app
-          </a>
-        </li>
-      </ul>
+      <!-- Card 2 -->
+      <div class="card2">
+        <img src="assets/profile.webp" width="200" alt="" />
+        <h2>Fakhri Muzakki</h2>
+        <p class="Fullstack developer">Fullstack developer</p>
+      </div>
     </div>
+
+    <script>
+      lucide.createIcons();
+    </script>
   </body>
 </html>
