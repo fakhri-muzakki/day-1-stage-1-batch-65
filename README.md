@@ -4,6 +4,6 @@
 
 ![Preview Website](assets/screenshot.png)
 
-Project ini merupakan tugas **bootcamp DumbWays hari kedua** yaitu pembuatan web sederhana yang menampilkan **Card**.
+Project ini merupakan tugas **bootcamp DumbWays hari ketiga** yaitu pembuatan web sederhana yang menampilkan dua halaman yaitu home dan contact.
 
-Website dibuat menggunakan **HTML dan CSS murni** dengan tampilan **dark theme** dan layout vertikal.
+Website dibuat menggunakan html, css dan bootstrap.
