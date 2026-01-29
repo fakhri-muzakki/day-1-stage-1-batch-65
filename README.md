@@ -2,8 +2,13 @@
 
 ## Preview
 
-![Preview Website](assets/screenshot.png)
+![Preview Website](assets/images/screenshot.png)
 
-Project ini merupakan tugas **bootcamp DumbWays hari ketiga** yaitu pembuatan web sederhana yang menampilkan dua halaman yaitu home dan contact.
+Project ini merupakan tugas **bootcamp DumbWays hari empat** yaitu pembuatan web sederhana yang menampilkan halaman my - project.
 
 Website dibuat menggunakan html, css dan bootstrap.
+
+## Tambahan
+
+- Menambahkan toast untuk message
+- Menambahkan preview image di input form
