@@ -82,25 +82,32 @@ const handleSubmit = function (event) {
 };
 
 let imagePreviewUrl = "";
+/**
+ * Handle image input change
+ * @param {Event} event
+ */
 const handleChange = function (event) {
-  if (imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
+  /** @type {HTMLInputElement} */
+  const input = event.target;
 
-  const file = event.files[0];
+  if (imagePreviewUrl) {
+    URL.revokeObjectURL(imagePreviewUrl);
+  }
+
+  const file = input.files[0];
   if (!file) return;
 
-  // Validasi tipe file
   const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
   if (!allowedTypes.includes(file.type)) {
     alert("Only JPG and PNG are allowed");
-    event.value = "";
+    input.value = "";
     imagePreview.classList.add("d-none");
     return;
   }
 
-  // Validasi ukuran (2MB)
   if (file.size > 2 * 1024 * 1024) {
     alert("Image must be less than 2MB");
-    event.value = "";
+    input.value = "";
     imagePreview.classList.add("d-none");
     return;
   }
