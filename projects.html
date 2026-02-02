@@ -184,6 +184,44 @@
       <section class="container">
         <h2 class="text-center mb-5">My Project</h2>
 
+        <div class="dropdown text-end mb-4">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Filter By Last Time
+          </button>
+          <ul class="dropdown-menu" id="filterByLastTimeMenu">
+            <li>
+              <button class="dropdown-item" data-filter="1">
+                Last 1 minutes
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item" data-filter="5">
+                Last 5 minutes
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item" data-filter="10">
+                Last 10 minutes
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item" data-filter="30">
+                Last 30 minutes
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item" data-filter="60">
+                Last 60 minutes
+              </button>
+            </li>
+          </ul>
+        </div>
+
         <div class="row g-4" id="projects">
           <div
             id="emptyProject"
