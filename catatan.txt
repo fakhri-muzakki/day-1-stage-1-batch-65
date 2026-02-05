@@ -1,5 +1,0 @@
-
-1. Buat video 
-2. push ke github
-3. upload video ke google drive
-4. kirim tugas

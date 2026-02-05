@@ -1,5 +1,5 @@
 <main class="container" id="container">
-  <h1 class="text-center fs-2 mb-4" id="projectName"> {{{name}}} </h1>
+  <h1 class="text-center fs-2 mb-4" id="projectName">Project Name</h1>
   <div class="card shadow-lg border-0 w-75 mx-auto">
     <div class="card-body">
       <!-- Top Content -->
@@ -8,7 +8,7 @@
         <div class="mb-3 mb-md-0">
           <img
             id="image"
-            src={{{image_url}}}
+            src="/assets/images/sample.webp"
             alt="Project Image"
             width="380px"
             class="rounded"
@@ -20,16 +20,14 @@
           <h5 class="fw-semibold mb-2">Duration</h5>
           <p class="text-muted mb-3 d-flex align-items-center gap-2">
             <i data-lucide="calendar" class="icon"></i>
-            <span id="date"> {{{start_date}}} - {{{end_date}}} </span>
+            <span id="date">12 Jan 2025 - 12 Feb 2025</span>
           </p>
 
           <h5 class="fw-semibold mb-2">Technologies</h5>
           <div id="technologies">
-            {{#each technologies}}
-              <span class="badge bg-secondary me-1">
-                {{this}}
-              </span>
-            {{/each}}
+            <span class="badge bg-secondary me-1">Next JS</span>
+            <span class="badge bg-secondary me-1">TypeScript</span>
+            <span class="badge bg-secondary me-1">Bootstrap</span>
           </div>
         </div>
       </div>
@@ -38,7 +36,11 @@
       <div>
         <h5 class="fw-semibold mb-2">Description</h5>
         <p class="text-muted mb-4" id="description">
-          {{{description}}}
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam
+          nobis, laboriosam reprehenderit, amet facilis distinctio at ipsa
+          reiciendis cupiditate, deleniti illo dignissimos doloremque
+          perferendis. Adipisci accusantium sapiente eaque consequatur
+          voluptatem.
         </p>
 
         <a href="/projects" class="btn btn-success"> Back </a>
@@ -46,3 +48,5 @@
     </div>
   </div>
 </main>
+
+<script type="module" src="/js/detail-project.js"></script>

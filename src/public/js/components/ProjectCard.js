@@ -1,12 +1,15 @@
 export default function ProjectCard(project) {
   return `
-     <a href="/detail-project.html?id=${project.id}" class="card h-100 shadow-lg text-decoration-none">
+     <div  class="card h-100 shadow-lg" data-project-id="${project.id}">
+     <a href="/projects/${project.id}" class="text-decoration-none ">
         <img
           src="${project.image}"
           height="200px"
           class="card-img-top"
           alt="Project Image"
         />
+      </a>
+
         <div class="card-body">
           <h5 class="card-title">${project.projectName}</h5>
           <p class="card-text">${project.description}</p>
@@ -20,11 +23,10 @@ export default function ProjectCard(project) {
               .join("")}
           </div>
 
-          <div class="d-flex gap-2">
-            <button class="btn btn-warning btn-sm w-50">Edit</button>
-            <button class="btn btn-danger btn-sm w-50">Delete</button>
+          <div class="d-flex gap-2 button-wraper">
+            <button class="btn btn-warning btn-sm w-50 btn-edit" >Edit</button>
+            <button class="btn btn-danger btn-sm w-50 btn-delete">Delete</button>
           </div>
         </div>
-      </a>
-    `;
+      </div>`;
 }
