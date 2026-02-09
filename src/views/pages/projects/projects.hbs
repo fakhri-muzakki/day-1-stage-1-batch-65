@@ -1,0 +1,185 @@
+<main class='container d-flex flex-column justify-content-center align-items-center p-5 gap-5'>
+  <!-- Form section -->
+  <section class='card w-100' style='max-width: 520px'>
+    <div class='card-body'>
+      <h3 class='text-center mb-4 text-dark'>Add My Project</h3>
+
+      <form id='projectForm' id='projectForm' method='post' action='/projects' {{! enctype='multipart/form-data' }}>
+        <!-- Project Name -->
+        <div class='mb-3'>
+          <label class='form-label text-dark fw-medium'>Project Name</label>
+          <input type='text' name='name' required id='name' class='form-control' placeholder='Enter project name' {{#if
+            project.name}}value={{project.name}}{{/if}} />
+          {{#if errors.name}}
+          <div class="text-danger">
+            {{errors.name}}
+          </div>
+          {{/if}}
+        </div>
+
+        <!-- Dates -->
+        <div class='row'>
+          <div class='col-md-6 mb-3'>
+            <label class='form-label text-dark fw-medium'>Start Date</label>
+            <input type='date' name='startDate' required id='startDate' class='form-control' {{#if
+              project.startDate}}value={{project.startDate}}{{/if}} />
+            {{#if errors.startDate}}
+            <div class="text-danger">
+              {{errors.startDate}}
+            </div>
+            {{/if}}
+          </div>
+          <div class='col-md-6 mb-3'>
+            <label class='form-label text-dark fw-medium'>End Date</label>
+            <input type='date' name='endDate' required id='endDate' class='form-control' {{#if
+              project.endDate}}value={{project.endDate}}{{/if}} />
+            {{#if errors.endDate}}
+            <div class="text-danger">
+              {{errors.endDate}}
+            </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class='mb-3'>
+          <label class='form-label text-dark fw-medium'>Description</label>
+          <textarea class='form-control' rows='4' name='description' required id='description'
+            placeholder='Describe your project' {{#if project.description}}value={{project.description}}{{/if}}>
+            {{#if
+            project.description}}{{project.description}}{{/if}}
+            </textarea>
+          {{#if errors.description}}
+          <div class="text-danger">
+            {{errors.description}}
+          </div>
+          {{/if}}
+        </div>
+
+        <!-- Technologies -->
+        <div class='mb-3' id='technologies'>
+          <label class='form-label text-dark fw-medium d-block'>Technologies</label>
+          {{#if errors.technologies}}
+          <div class="text-danger">
+            {{errors.technologies}}
+          </div>
+          {{/if}}
+          {{#each technologies}}
+          <div class='form-check'>
+            <input class='form-check-input' type='checkbox' name='technologies' value={{this.id}} {{#if
+              checked}}checked{{/if}} />
+            <label class='form-check-label text-dark' for='opsi1'>
+              {{{this.name}}}
+            </label>
+          </div>
+          {{/each}}
+
+        </div>
+
+        <!-- Image -->
+        <div class='mb-4'>
+          <label class='form-label text-dark fw-medium'>Upload Image</label>
+          <input type='file' name='image' required id='image' class='form-control mb-2' />
+          <div class='mb-3'>
+            <img id='imagePreview' {{#if project.image}} class='img-fluid rounded' src='/images/{{project.image}}'
+              {{else}}class='img-fluid rounded d-none' {{/if}} alt='Preview Image' />
+          </div>
+          <small class='form-text text-muted'>
+            Accepted formats: .jpg, .jpeg, .png (Max 2MB)
+          </small>
+        </div>
+
+        <!-- Submit -->
+        <button type='submit' class='btn btn-primary w-100 fw-medium'>
+          Submit Project
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- project section -->
+  <section class='container'>
+    <h2 class='text-center mb-5'>My Project</h2>
+
+    <div class='dropdown text-end mb-4'>
+      <button class='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+        Filter By Last Time
+      </button>
+      <ul class='dropdown-menu' id='filterByLastTimeMenu'>
+        <li>
+          <button class='dropdown-item' data-filter='1'>
+            Last 1 minutes
+          </button>
+        </li>
+        <li>
+          <button class='dropdown-item' data-filter='5'>
+            Last 5 minutes
+          </button>
+        </li>
+        <li>
+          <button class='dropdown-item' data-filter='10'>
+            Last 10 minutes
+          </button>
+        </li>
+        <li>
+          <button class='dropdown-item' data-filter='30'>
+            Last 30 minutes
+          </button>
+        </li>
+        <li>
+          <button class='dropdown-item' data-filter='60'>
+            Last 60 minutes
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class='row g-4 px-4' id='projects'>
+      {{#if projects.length}}
+      {{#each projects}}
+      <div class='col-md-4 mb-4'>
+        <div class='card h-100 shadow-lg text-dark'>
+          <a href='/projects/{{id}}' class='text-decoration-none'>
+
+            <img src='/images/{{image}}' height='200' {{! class="card-img-top" }} class='card-img-top object-fit-cover'
+              alt='Project Image' />
+          </a>
+
+          <div class='card-body'>
+            <h5 class='card-title'>{{name}}</h5>
+            <p class='card-text'>{{description}}</p>
+
+            <div class='mb-3'>
+              {{#each technologies}}
+              <span class='badge bg-secondary me-1'>
+                {{this}}
+              </span>
+              {{/each}}
+            </div>
+
+            <div class='d-flex gap-2 p-0 margin-costum'>
+              <a href='/projects/{{id}}/edit' class='btn btn-warning btn-sm w-50 h-25'>Edit</a>
+              <form action='/projects/{{id}}?_method=DELETE' method='POST' class='w-50 p-0'
+                onsubmit="return confirm('Yakin ingin menghapus project ini?')">
+                <button type='submit' class='btn btn-danger btn-sm w-100'>
+                  Delete
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
+      <div id='emptyProject' class='text-center text-secondary py-5 bg-white shadow-lg mx-auto'
+        style='max-width: 520px'>
+        <i class='bi bi-folder-x display-4 mb-3'></i>
+        <h5 class='text-white'>No Project Found</h5>
+        <p class='mb-0'>You haven’t added any project yet.</p>
+      </div>
+      {{/if}}
+
+
+    </div>
+  </section>
+</main>
