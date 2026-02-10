@@ -8,8 +8,6 @@ export const validateHbs =
   async (req: Request, res: Response, next: NextFunction) => {
     const result = schema.safeParse(req[dataType]);
 
-    console.log(req.body);
-
     if (!result.success) {
       const errors: Record<string, string> = {};
 
@@ -18,42 +16,57 @@ export const validateHbs =
         errors[field] = err.message;
       });
 
-      console.log(errors);
+      if (
+        !req.originalUrl.includes('register') &&
+        !req.originalUrl.includes('login')
+      ) {
+        const technologies = await technologyService.get();
+        const mappedTechnologies = technologies.map((tech) => ({
+          ...tech,
+          checked: req.body.technologies.includes(tech.id),
+        }));
 
-      const technologies = await technologyService.get();
-      const mappedTechnologies = technologies.map((tech) => ({
-        ...tech,
-        checked: req.body.technologies.includes(tech.id),
-      }));
+        if (req.originalUrl.includes('PUT')) {
+          return res.render('pages/projects/editProject', {
+            layout: 'layouts/main',
+            errors: errors,
+            technologies: mappedTechnologies,
+            project: {
+              ...req.body,
+              start_date: req.body.startDate,
+              end_date: req.body.endDate,
+            },
+          });
+        }
 
-      if (req.originalUrl.includes('PUT')) {
-        return res.render('pages/projects/editProject', {
+        const userID = '5553b625-1027-471b-b69b-d012050055fa';
+
+        const data = await projectService.getAllByUserId(userID);
+
+        return res.render('pages/projects/projects', {
           layout: 'layouts/main',
           errors: errors,
           technologies: mappedTechnologies,
+          projects: data,
           project: {
             ...req.body,
             start_date: req.body.startDate,
             end_date: req.body.endDate,
           },
         });
+      } else if (req.originalUrl.includes('register')) {
+        return res.render('pages/auth/register', {
+          layout: 'layouts/auth',
+          errors: errors,
+          old: { ...req.body },
+        });
+      } else if (req.originalUrl.includes('login')) {
+        return res.render('pages/auth/login', {
+          layout: 'layouts/auth',
+          errors: errors,
+          old: { ...req.body },
+        });
       }
-
-      const userID = '5553b625-1027-471b-b69b-d012050055fa';
-
-      const data = await projectService.getAllByUserId(userID);
-
-      return res.render('pages/projects/projects', {
-        layout: 'layouts/main',
-        errors: errors,
-        technologies: mappedTechnologies,
-        projects: data,
-        project: {
-          ...req.body,
-          start_date: req.body.startDate,
-          end_date: req.body.endDate,
-        },
-      });
     }
 
     req[dataType] = result.data;

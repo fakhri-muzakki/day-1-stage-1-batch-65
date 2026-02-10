@@ -3,6 +3,8 @@ import cors from 'cors';
 import hbs from 'hbs';
 import path from 'path';
 import methodOverride from 'method-override';
+import session from 'express-session';
+import flash from 'express-flash';
 
 // Import routes
 import routes from './routes/index.route';
@@ -11,6 +13,7 @@ import routes from './routes/index.route';
 import { notFound, errorHandler } from './middlewares';
 import { notFoundView } from './middlewares/errors/notFoundView';
 import { viewErrorHandler } from './middlewares/errors/viewErrorHandler';
+import env from './config/env';
 
 const app = express();
 
@@ -18,6 +21,28 @@ const app = express();
 // app.use(helmet());
 app.use(cors());
 app.use(methodOverride('_method'));
+
+// Session
+app.use(
+  session({
+    name: 'my-app-session',
+    secret: env.app.sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      maxAge: 1000 * 60 * 60 * 24, // 24 jam
+    },
+  })
+);
+
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.error = req.flash('error')[0];
+  res.locals.success = req.flash('success')[0];
+  next();
+});
 
 // View engine
 app.set('view engine', 'hbs');

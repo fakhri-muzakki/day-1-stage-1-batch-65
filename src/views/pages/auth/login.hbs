@@ -1,0 +1,60 @@
+<main class="container d-flex align-items-center justify-content-center min-vh-100">
+    <section class="card shadow-sm w-100" style="max-width: 420px">
+        <div class="card-body p-4">
+
+            <!-- Title -->
+            <div class="text-center mb-4">
+                <h3 class="fw-semibold mb-1">Sign In</h3>
+                <p class="text-muted small mb-0">
+                    Please enter your credentials
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form method="POST" action="/login" novalidate>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-medium">
+                        Email address
+                    </label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                        required {{#if old.email}}value={{old.email}}{{/if}} />
+                    {{#if errors.email}}
+                    <div class="text-danger">
+                        {{errors.email}}
+                    </div>
+                    {{/if}}
+                </div>
+
+                <!-- Password -->
+                <div class="mb-4">
+                    <label for="password" class="form-label fw-medium">
+                        Password
+                    </label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="••••••••"
+                        required {{#if old.password}}value={{old.password}}{{/if}} />
+                    {{#if errors.password}}
+                    <div class="text-danger">
+                        {{errors.password}}
+                    </div>
+                    {{/if}}
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-primary w-100 mb-3">
+                    Sign In
+                </button>
+
+                <!-- Login Link -->
+                <p class="text-center small mb-0">
+                    Don't have an account yet?
+                    <a href="/register" class="fw-medium text-decoration-none">
+                        Sign up
+                    </a>
+                </p>
+            </form>
+
+        </div>
+    </section>
+</main>

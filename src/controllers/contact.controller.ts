@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { type Request, type Response } from 'express';
 
 const renderContact = async (req: Request, res: Response) => {
   res.render('pages/contact', {

@@ -18,6 +18,21 @@
   </header>
 
   {{{body}}}
+  {{#if error}}
+  <div class="flash-alert alert alert-danger fade show position-fixed shadow-sm d-flex justify-content-between"
+    style="top: 20px; right: 20px; z-index: 1055; min-width: 280px;" role="alert">
+    {{error}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {{/if}}
+
+  {{#if success}}
+  <div class="flash-alert alert alert-success fade show position-fixed shadow-sm d-flex justify-content-between"
+    style="top: 20px; right: 20px; z-index: 1055; min-width: 280px;" role="alert">
+    {{success}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {{/if}}
 
   <script type="module" src="/js/index.js"></script>
   {{!--

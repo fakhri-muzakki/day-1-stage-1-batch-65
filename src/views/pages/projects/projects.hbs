@@ -79,7 +79,7 @@
         <!-- Image -->
         <div class='mb-4'>
           <label class='form-label text-dark fw-medium'>Upload Image</label>
-          <input type='file' name='image' required id='image' class='form-control mb-2' />
+          <input type='file' name='image' id='image' class='form-control mb-2' />
           <div class='mb-3'>
             <img id='imagePreview' {{#if project.image}} class='img-fluid rounded' src='/images/{{project.image}}'
               {{else}}class='img-fluid rounded d-none' {{/if}} alt='Preview Image' />

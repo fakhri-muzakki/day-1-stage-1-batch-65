@@ -9,6 +9,7 @@ const required = (key: string) => {
 const env = {
   app: {
     port: Number(process.env.PORT),
+    sessionSecret: required('SESSION_SECRET'),
   },
   db: {
     host: required('DB_HOST'),

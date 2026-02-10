@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { type Request, type Response } from 'express';
 // import projectTechnologiesService from '../services/projectTechnologies.service';
 // import projectTechnologiesService from '../../services/projectTechnologies.service';
 import projectService from '@/services/project.service';
@@ -108,6 +108,10 @@ interface UpdateProjectRequest extends Request {
 const updateProject = async (req: UpdateProjectRequest, res: Response) => {
   const { id: projectId } = req.params;
   const userId = '5553b625-1027-471b-b69b-d012050055fa'; // sementara (nanti dari auth)
+
+  console.log('masuk update');
+  console.log(req.body);
+
   const {
     name,
     description,
