@@ -1,6 +1,7 @@
 import userService from '@/services/user.service';
 import { type Request, type Response } from 'express';
 import bcrypt from 'bcrypt';
+import path from 'path';
 
 const renderLogin = async (req: Request, res: Response) => {
   return res.render('pages/auth/login', {
@@ -54,7 +55,7 @@ const login = async (req: Request, res: Response) => {
 
     const user = await userService.getByEmail(email);
     if (!user) {
-      req.flash('error', 'Invalid email or password');
+      req.flash('error', 'User not found');
       return res.redirect('/login');
     }
 

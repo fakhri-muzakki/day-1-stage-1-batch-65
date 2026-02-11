@@ -3,14 +3,14 @@
   <!-- Form section -->
   <section class='card w-100' style='max-width: 520px'>
     <div class='card-body'>
-      <h3 class='text-center mb-4 text-dark'>Add My Project</h3>
+      <h3 class='text-center mb-4 text-dark'>Edit Project</h3>
 
-      <form id='projectForm' id='projectForm' method='post' action='/projects/{{project.id}}?_method=PUT' {{!
-        enctype='multipart/form-data' }}>
+      <form id='projectForm' id='projectForm' method='post' action='/projects/{{project.id}}?_method=PUT'
+        enctype='multipart/form-data'>
         <!-- Project Name -->
         <div class='mb-3'>
           <label class='form-label text-dark fw-medium'>Project Name</label>
-          <input type='text' name='name' required id='name' value={{project.name}} class='form-control'
+          <input type='text' name='name' required id='name' value='{{project.name}}' class='form-control'
             placeholder='Enter project name' />
           {{#if errors.name}}
           <div class="text-danger">

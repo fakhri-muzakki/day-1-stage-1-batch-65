@@ -1,15 +1,21 @@
 import { type Request, type Response } from 'express';
-// import projectTechnologiesService from '../services/projectTechnologies.service';
-// import projectTechnologiesService from '../../services/projectTechnologies.service';
 import projectService from '@/services/project.service';
 import technologyService from '@/services/technology.service';
 import projectTechnologiesService from '@/services/projectTechnologies.service';
+import { deleteFile } from '@/utils/file';
+
+const getUserId = (req: Request): string => {
+  if (!req.session.user) {
+    throw new Error('User is not authenticated');
+  }
+
+  return req.session.user.id;
+};
 
 const renderProjects = async (req: Request, res: Response) => {
-  const userID = '5553b625-1027-471b-b69b-d012050055fa';
-  const data = await projectService.getAllByUserId(userID);
+  const userId = getUserId(req);
+  const data = await projectService.getAllByUserId(userId);
   const technologies = await technologyService.get();
-  // console.log(technologies);
 
   res.render('pages/projects/projects', {
     layout: 'layouts/main',
@@ -35,13 +41,10 @@ const renderProjectById = async (
 
 const createProject = async (req: Request, res: Response) => {
   try {
-    const { name, description, startDate, endDate, technologies, image } =
-      req.body;
-
-    const userId = '5553b625-1027-471b-b69b-d012050055fa'; // sementara (nanti dari auth)
-    // const technologiesArr = Array.isArray(technologies)
-    //   ? technologies
-    //   : [technologies];
+    const userId = getUserId(req);
+    const { name, description, startDate, endDate, technologies } = req.body;
+    const imageFilename = req.file?.filename;
+    const imageUrl = `/uploads/${imageFilename}`;
 
     const technologiesArr = !technologies
       ? []
@@ -54,23 +57,36 @@ const createProject = async (req: Request, res: Response) => {
       description: description,
       start_date: startDate,
       end_date: endDate,
-      image,
+      image: imageUrl,
       user_id: userId,
       technologyIds: technologiesArr,
     });
 
     return res.redirect('/projects');
   } catch (error) {
-    console.error(error);
-    return res.status(500).send('Failed to create project');
+    console.error('Login error:', error);
+
+    req.flash('error', 'Something went wrong. Please try again.');
+    return res.redirect('/login');
   }
 };
 
 const deleteProject = async (req: Request<{ id: string }>, res: Response) => {
-  const { id } = req.params;
-  await projectService.deleteById(id);
+  try {
+    const { id } = req.params;
+    const { image } = await projectService.getById(id);
+    console.log(image);
 
-  return res.redirect('/projects');
+    await projectService.deleteById(id);
+    await deleteFile(image);
+
+    return res.redirect('/projects');
+  } catch (error) {
+    console.error('Login error:', error);
+
+    req.flash('error', 'Something went wrong. Please try again.');
+    return res.redirect('/projects');
+  }
 };
 
 const renderEditById = async (req: Request<{ id: string }>, res: Response) => {
@@ -106,64 +122,74 @@ interface UpdateProjectRequest extends Request {
 }
 
 const updateProject = async (req: UpdateProjectRequest, res: Response) => {
-  const { id: projectId } = req.params;
-  const userId = '5553b625-1027-471b-b69b-d012050055fa'; // sementara (nanti dari auth)
+  try {
+    const { id: projectId } = req.params;
+    const userId = getUserId(req);
 
-  console.log('masuk update');
-  console.log(req.body);
-
-  const {
-    name,
-    description,
-    startDate,
-    endDate,
-    technologies,
-    image,
-    existingImage,
-  } = req.body;
-
-  let imageData: string = existingImage;
-  if (image) imageData = image;
-
-  const technologiesArr = !technologies
-    ? []
-    : Array.isArray(technologies)
-      ? technologies
-      : [technologies];
-
-  const projectTechnologies =
-    (await projectTechnologiesService.getByProjectId(projectId)) || [];
-
-  const recordAkanDiHapus = projectTechnologies.filter(
-    (v: string) => !technologiesArr.includes(v)
-  );
-
-  const recordAkanDiTambahkan = technologiesArr
-    .filter(Boolean)
-    .filter((v) => !projectTechnologies.includes(v));
-
-  // update operation
-  await projectService.updateById(
-    {
-      name: name,
+    const {
+      name,
       description,
-      start_date: startDate,
-      end_date: endDate,
-      user_id: userId,
-      image: imageData,
-    },
-    projectId
-  );
+      startDate,
+      endDate,
+      technologies,
 
-  for (let techId of recordAkanDiTambahkan) {
-    await projectTechnologiesService.createTechnology(projectId, techId);
+      existingImage,
+    } = req.body;
+
+    const imageFilename = req.file?.filename;
+    const imageUrl = imageFilename && `/uploads/${imageFilename}`;
+
+    let imageData: string = existingImage;
+    if (imageUrl) {
+      await deleteFile(existingImage);
+      imageData = imageUrl;
+    }
+
+    const technologiesArr = !technologies
+      ? []
+      : Array.isArray(technologies)
+        ? technologies
+        : [technologies];
+
+    const projectTechnologies =
+      (await projectTechnologiesService.getByProjectId(projectId)) || [];
+
+    const recordAkanDiHapus = projectTechnologies.filter(
+      (v: string) => !technologiesArr.includes(v)
+    );
+
+    const recordAkanDiTambahkan = technologiesArr
+      .filter(Boolean)
+      .filter((v) => !projectTechnologies.includes(v));
+
+    // update operation
+    await projectService.updateById(
+      {
+        name: name,
+        description,
+        start_date: startDate,
+        end_date: endDate,
+        user_id: userId,
+        image: imageData,
+      },
+      projectId
+    );
+
+    for (let techId of recordAkanDiTambahkan) {
+      await projectTechnologiesService.createTechnology(projectId, techId);
+    }
+
+    for (let techId of recordAkanDiHapus) {
+      await projectTechnologiesService.deleteTechnology(projectId, techId);
+    }
+
+    return res.redirect('/projects');
+  } catch (error) {
+    console.error('Login error:', error);
+
+    req.flash('error', 'Something went wrong. Please try again.');
+    return res.redirect('/login');
   }
-
-  for (let techId of recordAkanDiHapus) {
-    await projectTechnologiesService.deleteTechnology(projectId, techId);
-  }
-
-  return res.redirect('/projects');
 };
 
 const projectController = {

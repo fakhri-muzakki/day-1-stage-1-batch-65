@@ -12,7 +12,7 @@ export const createProjectSchema = z.object({
     .union([z.string(), z.array(z.string())])
     .transform((val) => (Array.isArray(val) ? val : [val])),
 
-  image: z.string().min(1),
+  // image: z.string().min(1),
 });
 
 export type CreateProductInput = z.infer<typeof createProjectSchema>;
@@ -29,7 +29,7 @@ export const updateProjectSchema = z.object({
     .union([z.string(), z.array(z.string())])
     .transform((val) => (Array.isArray(val) ? val : [val])),
 
-  image: z.string(),
+  // image: z.string(),
   existingImage: z.string().min(1),
 });
 

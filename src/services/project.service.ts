@@ -1,6 +1,6 @@
 import { pool } from '@/config/database';
 import { randomUUID } from 'crypto';
-import type { Project } from '@/types/project';
+// import type { Project } from '@/types/project';
 
 const getAllByUserId = async (userId: string) => {
   const result = await pool.query(
@@ -32,7 +32,20 @@ const getAllByUserId = async (userId: string) => {
   return result.rows;
 };
 
-const getById = async (projectId: string) => {
+interface Project {
+  id: string;
+  name: string;
+  start_date: string;
+  end_date: string;
+  image: string;
+  description: string;
+  created_at: Date;
+  updated_at: Date;
+  user_id: string;
+  technologies: string[];
+}
+
+const getById = async (projectId: string): Promise<Project> => {
   const result = await pool.query(
     `SELECT
   p.id,
@@ -57,7 +70,6 @@ LEFT JOIN technologies t
   ON t.id = pt.technology_id
 
 WHERE p.id = $1
-
 GROUP BY p.id;
 `,
     [projectId]

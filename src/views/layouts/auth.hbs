@@ -31,24 +31,8 @@
     {{/if}}
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const alerts = document.querySelectorAll(".flash-alert");
 
-            alerts.forEach((alert) => {
-                setTimeout(() => {
-                    alert.classList.remove("show");
-                    alert.classList.add("hide");
-
-                    setTimeout(() => {
-                        alert.remove();
-                    }, 300);
-                }, 3000); // 3 detik
-            });
-        });
-    </script>
-
-
+    <script src="/js/removeAlert.js"></script>
     <script>
         lucide.createIcons();
     </script>

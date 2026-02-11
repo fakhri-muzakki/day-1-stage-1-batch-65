@@ -4,7 +4,7 @@
     <div class='card-body'>
       <h3 class='text-center mb-4 text-dark'>Add My Project</h3>
 
-      <form id='projectForm' id='projectForm' method='post' action='/projects' {{! enctype='multipart/form-data' }}>
+      <form id='projectForm' id='projectForm' method='post' action='/projects' enctype='multipart/form-data'>
         <!-- Project Name -->
         <div class='mb-3'>
           <label class='form-label text-dark fw-medium'>Project Name</label>
@@ -141,7 +141,7 @@
         <div class='card h-100 shadow-lg text-dark'>
           <a href='/projects/{{id}}' class='text-decoration-none'>
 
-            <img src='/images/{{image}}' height='200' {{! class="card-img-top" }} class='card-img-top object-fit-cover'
+            <img src='{{image}}' height='200' {{! class="card-img-top" }} class='card-img-top object-fit-cover'
               alt='Project Image' />
           </a>
 

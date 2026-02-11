@@ -3,6 +3,14 @@ import { type Request, type Response, type NextFunction } from 'express';
 import projectService from '../services/project.service';
 import technologyService from '../services/technology.service';
 
+const getUserId = (req: Request): string => {
+  if (!req.session.user) {
+    throw new Error('User is not authenticated');
+  }
+
+  return req.session.user.id;
+};
+
 export const validateHbs =
   (schema: ZodType, dataType: 'body' | 'query' | 'params' = 'body') =>
   async (req: Request, res: Response, next: NextFunction) => {
@@ -15,6 +23,9 @@ export const validateHbs =
         const field = err.path.join('.');
         errors[field] = err.message;
       });
+
+      // console.log(req);
+      console.log(req.body);
 
       if (
         !req.originalUrl.includes('register') &&
@@ -39,7 +50,7 @@ export const validateHbs =
           });
         }
 
-        const userID = '5553b625-1027-471b-b69b-d012050055fa';
+        const userID = getUserId(req);
 
         const data = await projectService.getAllByUserId(userID);
 
